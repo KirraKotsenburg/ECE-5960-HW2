@@ -1,0 +1,17 @@
+module stream_cipher(input clk, encrypt, [4:0]ogtxt, output reg [4:0] ciphertxt, plaintxt);
+
+	wire [4:0]key;
+
+	lsfr LFSR(.clk(clk), .rst(rst), .out(key));
+
+	always@(posedge clk) begin
+		if(encrypt) begin
+			ciphertxt <= ogtxt ^ key;
+			end
+		else begin
+			plaintxt <= ciphertxt ^ key;
+			end
+
+	end
+
+endmodule

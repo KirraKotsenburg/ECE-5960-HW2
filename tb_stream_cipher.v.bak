@@ -1,0 +1,46 @@
+module tb_stream_cipher();
+
+	  // Inputs
+  reg clk;
+  reg rst;
+  reg encrypt;
+  reg[4:0]ogtxt;
+
+  // Outputs
+  wire [4:0]ciphertxt, plaintxt;
+  
+  //Wires
+  wire [4:0]key;
+  
+
+  // Instantiate the lfsr
+  stream_cipher uut (
+    .clk(clk),
+    .encrypt(encrypt),
+    .ogtxt(ogtxt),
+	 .ciphertxt(ciphertxt),
+	 .plaintxt(plaintxt)
+  );
+  
+
+  // Set up clock
+  always #5 clk = ~clk;
+
+  // Run the testbench
+  initial begin
+    clk = 0;
+    rst = 1;
+    #10 rst = 0;
+	 encrypt = 1;
+	 #10 encrypt = 0;
+	 
+    #100;
+  end
+
+  // Print any changes to output
+  always @(posedge clk) begin
+    $display("Encryption: %b", ciphertxt);
+	 $display("Decryption: %b", plaintxt);
+  end
+
+endmodule

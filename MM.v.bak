@@ -1,0 +1,44 @@
+module MM(
+    input [2:0] A,
+    input [2:0] B,
+    input [2:0] P,
+    output reg [2:0] G
+);
+
+// Temporary registers
+reg [2:0] Ai;
+reg [2:0] temp_result;
+
+// Initialize G as 0
+initial begin
+    G = 3'b000;
+end
+
+always @(*) begin
+    // Initialize G(x) as 0
+    G = 3'b000;
+
+    // Multiply the current bit of A[0] with B(x) and add it to G(x)
+    G = G + (A[0] & B);
+    // Multiply the lowest bit of G with P(x) and add it to G(x)
+    G = G + (G[0] & P);
+    // Right shift G(x) by 1 bit
+    G = G >> 1;
+
+    // Multiply the current bit of A[1] with B(x) and add it to G(x)
+    G = G + (A[1] & B);
+    // Multiply the lowest bit of G with P(x) and add it to G(x)
+    G = G + (G[0] & P);
+    // Right shift G(x) by 1 bit
+    G = G >> 1;
+
+    // Multiply the current bit of A[2] with B(x) and add it to G(x)
+    G = G + (A[2] & B);
+    // Multiply the lowest bit of G with P(x) and add it to G(x)
+    G = G + (G[0] & P);
+    // Right shift G(x) by 1 bit
+    G = G >> 1;
+end
+
+endmodule
+

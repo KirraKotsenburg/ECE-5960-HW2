@@ -1,0 +1,41 @@
+module tb_mastrovito_multiplier;
+  
+  // Inputs
+  reg [2:0] A;
+  reg [2:0] B;
+  
+  // Outputs
+  wire [2:0] Z;
+  
+  // Instantiate the mastrovito_multiplier
+  mastrovito_multiplier uut (
+    .A(A),
+    .B(B),
+    .Z(Z)
+  );
+  
+  // Clock set up
+  reg clk;
+  always #5 clk = ~clk;
+  
+  // Test stimulus
+  initial begin
+    // Initialize inputs
+    A = 3'b000;
+    B = 3'b000;
+    
+    // Apply inputs
+    #10 A = 3'b001; B = 3'b001;
+    #10 A = 3'b010; B = 3'b011;
+    #10 A = 3'b101; B = 3'b110;
+    
+    // Wait for a few clock cycles
+    #10;
+    
+    // Display results
+    $display("A = %b, B = %b, Z = %b", A, B, Z);
+    
+  end
+  
+  
+endmodule

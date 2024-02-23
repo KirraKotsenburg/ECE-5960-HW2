@@ -1,0 +1,18 @@
+module MontgomeryMultiplier(
+    input [2:0] A,
+    input [2:0] B,
+    input [2:0] P,
+    output [5:0] G
+);
+
+  wire [5:0] G1, G2, G3, G4;
+
+  MM MM1(A, B, P, G1);
+  MM MM2(A, B, P, G2);
+  MM MM3(A, B, P, G3);
+  MM MM4(A, B, P, G4);
+
+  // Output G is the sum of all partial results from the Montgomery Multiplier blocks
+  assign G = (G1 + G2 + G3 + G4) >> 2; // Assuming 4 blocks, divide by 2^2
+
+endmodule

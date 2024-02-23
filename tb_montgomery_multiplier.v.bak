@@ -1,0 +1,38 @@
+module tb_montgomery_multiplier;
+
+  // Inputs
+  reg [WIDTH-1:0] A;
+  reg [WIDTH-1:0] B;
+  reg [WIDTH-1:0] P;
+
+  // Output
+  wire [WIDTH*2-1:0] G;
+
+  // Instantiate the Montgomery Multiplier module
+  montgomery_multiplier uut (
+    .A(A),
+    .B(B),
+    .P(P),
+    .G(G)
+  );
+
+  // Clock generation
+  reg clk = 0;
+  always #5 clk = ~clk;
+
+  // Test stimulus
+  initial begin
+    // Initialize inputs
+    A = 3'b101; // Example input A
+    B = 3'b110; // Example input B
+    P = 3'b111; // Polynomial x^3 + x^2 + 1
+
+    // Apply inputs and observe outputs
+    #10;
+    $display("A = %b, B = %b, P = %b, G = %b", A, B, P, G);
+    // Add more test cases as needed
+     $monitor("A = %b, B = %b, P = %b, G = %b", A, B, P, G);
+
+  end
+
+endmodule

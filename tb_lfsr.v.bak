@@ -1,0 +1,38 @@
+`timescale 1ns / 1ns
+
+module tb_lfsr;
+
+// Parameters
+parameter PERIOD = 10; // Clock period in ns
+
+
+reg clk;
+reg reset;
+wire [4:0] out;
+
+// uut
+lfsr lfsr (
+    .clk(clk),
+    .rst(rst),
+    .out(out)
+);
+
+// Clock generation
+initial begin
+    clk = 0;
+    forever #PERIOD clk = ~clk;
+end
+
+// Reset assertion
+initial begin
+    reset = 1;
+    #50; // Reset for 50 ns
+    reset = 0;
+end
+
+// Monitor
+initial begin
+    $monitor("Time = %0t, Output = %b", $time, out);
+end
+
+endmodule
